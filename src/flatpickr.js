@@ -270,7 +270,6 @@ flatpickr.init = function (element, instanceConfig) {
 		prevArrow: "&lt;",
 		nextArrow: "&gt;",
 
-
 		// enables seconds in the time picker
 		enableSeconds: false,
 
@@ -285,6 +284,9 @@ flatpickr.init = function (element, instanceConfig) {
 
 		// called every time calendar is opened
 		onOpen: null, // function (dateObj, dateStr) {}
+
+		// called every time the user change the display
+		onDisplayChange: null, // function (year, month) {}
 
 		// called every time calendar is closed
 		onClose: null, // function (dateObj, dateStr) {}
@@ -682,6 +684,7 @@ flatpickr.init = function (element, instanceConfig) {
 		updateNavigationCurrentMonth();
 		buildDays();
 		(self.config.noCalendar ? timeContainer : calendar).focus();
+		self.notifyDisplayChanged();
 	};
 
 	selectDate = function (e) {
@@ -1187,6 +1190,8 @@ flatpickr.init = function (element, instanceConfig) {
 
 		updateNavigationCurrentMonth();
 		buildDays();
+
+		self.notifyDisplayChanged();
 	};
 
 	self.jumpToDate = function (jumpDate) {
@@ -1230,6 +1235,13 @@ flatpickr.init = function (element, instanceConfig) {
 
 		if (triggerChangeEvent) {
 			triggerChange();
+		}
+	};
+
+	// Notify the user if the month / year change.
+	self.notifyDisplayChanged = function () {
+		if (self.config.onDisplayChange && self.currentMonth >= 0 && self.currentMonth < 12) {
+			self.config.onDisplayChange(self.currentYear, self.currentMonth);
 		}
 	};
 

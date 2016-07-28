@@ -6,7 +6,10 @@
     "test": "start test/index.html",
     "start": "parallelshell \"http-server -o --silent\" \"gulp\""
   },
-  "dependencies": {},
+  "dependencies": {
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-livereload": "^3.8.1"
+  },
   "devDependencies": {
     "babel-preset-es2015": "^6.9.0",
     "babel-register": "^6.9.0",
